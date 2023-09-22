@@ -74,7 +74,3 @@ Outputs:
       - PublicIp: !GetAtt
         - Ec2
         - PublicIp
-    Condition: CreateProdResources
-  InstanceID:
-    Description: The Instance ID
-    Value: !Ref EC2Instance
