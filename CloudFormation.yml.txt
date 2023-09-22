@@ -32,6 +32,25 @@ Mappings:
 Resources:
   ECC:
     Type: AWS::EC2::Instance
+    Metadata:
+          AWS::CloudFormation::Init:
+            config:
+              packages:
+                :
+              groups:
+                :
+              users:
+                :
+              sources:
+                :
+              files:
+                :
+              commands:
+                :
+              services:
+                :
+        Properties:
+          :
     Properties:
       ImageId: !FindInMap
         - RegionMap
@@ -69,8 +88,8 @@ Outputs:
     Value: !Sub
       - "This is EC2's Private IP = ${PrivateIp} EC2's Public IP = ${PublicIp}"
       - PrivateIp: !GetAtt
-        - Ec2
+        - ECC
         - PrivateIp
-      - PublicIp: !GetAtt
-        - Ec2
+        PublicIp: !GetAtt
+        - ECC
         - PublicIp
