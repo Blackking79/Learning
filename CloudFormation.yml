@@ -69,11 +69,11 @@ Resources:
       UserData:
         !Base64:
           !Sub |
-          #!/bin/bash -xe
-          yum update -y
-          yum install -y aws-cfn-bootstrap
-          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource ECC --region ${AWS::Region}
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECC --region ${AWS::Region}
+            #!/bin/bash -xe
+            yum update -y
+            yum install -y aws-cfn-bootstrap
+            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource ECC --region ${AWS::Region}
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECC --region ${AWS::Region}
   AppSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
