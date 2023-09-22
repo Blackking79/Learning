@@ -63,4 +63,18 @@ Resources:
           ToPort: 22
           CidrIp: 0.0.0.0/0
 
-Output:
+Outputs:
+  Printing:
+    Description: Printing some info
+    Value: !Sub
+      - "This is EC2's Private IP = ${PrivateIp} EC2's Public IP = ${PublicIp}"
+      - PrivateIp: !GetAtt
+        - Ec2
+        - PrivateIp
+      - PublicIp: !GetAtt
+        - Ec2
+        - PublicIp
+    Condition: CreateProdResources
+  InstanceID:
+    Description: The Instance ID
+    Value: !Ref EC2Instance
