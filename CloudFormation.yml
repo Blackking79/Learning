@@ -67,7 +67,7 @@ Resources:
       SecurityGroups:
         - !Ref AppSG
       UserData:
-        !Base64:
+        'Fn::Base64':
           !Sub |
             #!/bin/bash -xe
             yum update -y
