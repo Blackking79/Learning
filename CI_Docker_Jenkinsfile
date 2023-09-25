@@ -14,6 +14,8 @@ pipeline {
         registryCredential = 'ecr:us-east-1:AWS Cred'
         appRegistry = "113195830333.dkr.ecr.us-east-1.amazonaws.com/vprofile"
         vprofileRegistry = "https://113195830333.dkr.ecr.us-east-1.amazonaws.com"
+        cluster = "vprofile"
+        service = "vprofileappsvc"
     }
   stages {
     stage('Fetching code'){
@@ -94,6 +96,22 @@ pipeline {
                     slackSend channel: '#devops',
                     color: COLOR_MAP[currentBuild.currentResult],
                     message: "Build Number ${env.BUILD_ID} has been successfully deployed to AWS ECR Repository \n *${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+                }
+            }
+    }
+
+    stage('Deploy to ecs') {
+        steps {
+            withAWS(credentials: 'AWS Cred', region: 'us-east-1') {
+            sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
+            }
+        }
+        post {
+                always {
+                    echo 'Sending Slack Notification......'
+                    slackSend channel: '#devops',
+                    color: COLOR_MAP[currentBuild.currentResult],
+                    message: "Build Number ${env.BUILD_ID} has been successfully deployed to AWS ECR"
                 }
             }
      }
