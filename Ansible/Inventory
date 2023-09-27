@@ -1,0 +1,21 @@
+all:
+  hosts:
+    worker01:
+      ansible_user: ec2-user
+      ansible_host: 172.31.95.50
+      ansible_ssh_private_key_file: security
+    worker02:
+      ansible_user: ec2-user
+      ansible_host: 172.31.94.242
+      ansible_ssh_private_key_file: security
+    worker03:
+      ansible_user: ec2-user
+      ansible_host: 172.31.82.173
+      ansible_ssh_private_key_file: security
+
+  children:
+    workers:
+      hosts:
+        worker01:
+        worker02:
+        worker03:
