@@ -1,0 +1,15 @@
+---
+- name: Webserver setup
+  hosts: workers
+  become: yes
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Install httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
