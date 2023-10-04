@@ -8,8 +8,49 @@
         name: httpd
         state: latest
 
-    - name: Install httpd
+    - name: Start httpd
       service:
         name: httpd
         state: started
         enabled: yes
+
+- name: Database setup
+  hosts: worker03
+  become: yes
+  vars:
+    dbname: accounts
+  tasks:
+    - debug:
+        msg: "Database name is {{ dbname }}"
+
+    - debug:
+        var: dbname
+
+    - name: Install MariaDB
+      yum:
+        name: mariadb-server
+        state: present
+    
+    - name: Install pymsysql
+      yum:
+        name: python3-PyMySQL
+        state: present
+
+    - name: Start MariaDB
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    #install ansible community galaxy first
+
+    - name: Create database
+      community.mysql.mysql_db:
+        name: "{{ dbname }}"
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
+      register: result
+
+    - name: Printing the result
+      debug:
+        var: result
