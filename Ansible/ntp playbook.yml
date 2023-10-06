@@ -1,0 +1,30 @@
+---
+- name: Webserver setup
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install ntp
+      yum:
+        name: chrony
+        state: latest
+      when: ansible_distribution == "CentOS"
+
+    - name: Install ntp
+      apt:
+        name: ntp
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+    
+    - name: Start ntp
+      service:
+        name: chronyd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: Start ntp
+      service:
+        name: ntp
+        state: started
+        enabled: yes
+      when: ansible_distribution == "Ubuntu"

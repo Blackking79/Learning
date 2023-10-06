@@ -9,9 +9,13 @@ all:
       ansible_host: 172.31.94.242
     worker03:
       ansible_host: 172.31.82.173
+    worker04:
+      ansible_host: 172.31.36.241
+      ansible_user: ubuntu
   children:
     workers:
       hosts:
         worker01:
         worker02:
         worker03:
+        worker04:
