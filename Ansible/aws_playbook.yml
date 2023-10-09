@@ -1,0 +1,23 @@
+---
+- name: AWS Test
+  hosts: localhost
+  tasks:
+    - name: create key pair
+      ec2_key:
+        name: music
+        region: us-east-1
+
+    - name: start an instance with a public IP address
+      amazon.aws.ec2_instance:
+        name: "public-compute-instance"
+        key_name: "music"
+       #vpc_subnet_id: subnet-0c4375ce0b18da0bb
+        instance_type: t2.micro
+        security_group: Worker
+        region: us-east-1
+        network:
+          assign_public_ip: true
+        image_id: ami-067d1e60475437da2
+        wait: no
+        tags:
+          Environment: Testing

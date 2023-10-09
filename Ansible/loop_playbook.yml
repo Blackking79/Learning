@@ -1,0 +1,45 @@
+---
+- name:  Learning by doing
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update Installed Packages
+      yum:
+        update_cache: yes
+        name: "*"
+        state: latest
+      when: ansible_distribution == "CentOS"
+
+    - name: Install New Packages
+      yum:
+        name: "{{ item }}"
+        state: latest
+      when: ansible_distribution == "CentOS"
+      loop:
+        - chrony
+        - httpd
+        - wget
+        - zip
+        - unzip
+        - java-17-openjdk.x86_64
+
+    - name: Update Installed Packages
+      apt:
+        update_cache: yes
+        name: "*"
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install New Packages
+      apt:
+        update_cache: yes
+        name: "{{ item }}"
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - ntp
+        - apache2
+        - wget
+        - zip
+        - unzip
+        - openjdk-8-jdk

@@ -1,0 +1,42 @@
+---
+- name:  Learning by doing
+  hosts: all
+  become: yes
+  tasks:
+    - name: Change the Banner file
+      copy:
+        content: This is controlled by ansible_controll machine, plz do not change it!!
+        dest: /etc/motd
+
+    - name: Changing the NTP Configuration on Ubuntu
+      template:
+        src: templates/ntp
+        dest: /etc/ntp.conf
+        backup: yes
+      when: ansible_distribution == "Ubuntu"
+      notify: Restart NTP Service on Ubuntu
+
+    - name: Changing the Chrony Configuration on Centos
+      template:
+        src: templates/chrony
+        dest: /etc/chrony.conf
+        backup: yes
+      when: ansible_distribution == "CentOS"
+      notify: Restart Chrony Service on Centos
+
+  handlers:
+    - name: Restart Chrony Service on Centos
+      service:
+        name: chronyd
+        state: restarted
+        enabled: yes
+      when: ansible_distribution == "CentOS"  
+
+    - name: Restart NTP Service on Ubuntu
+      service:
+        name: ntp
+        state: restarted
+        enabled: yes
+      when: ansible_distribution == "Ubuntu" 
+
+    
