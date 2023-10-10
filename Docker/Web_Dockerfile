@@ -1,0 +1,10 @@
+FROM ubuntu:latest
+LABEL 'AUTHOR'='SAGAR'
+LABEL 'PROJECT'='HIGHWAY_WEB_SETUP'
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y apache2
+ADD web.tar.gz /var/www/html
+WORKDIR /var/www/html
+VOLUME /var/log/apache2
+EXPOSE 80
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
