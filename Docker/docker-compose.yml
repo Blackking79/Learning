@@ -1,7 +1,7 @@
 services:
   vprodb:
     build:
-      context: ./vprodb
+      dockerfile: vprodb
     container_name: vprodb
     ports:
       - "3306:3306"
@@ -28,7 +28,7 @@ services:
     
   vproapp:
     build:
-      context: ./vproapp
+      dockerfile: vproapp
     container_name: vproapp
     ports:
       - "8080:8080"
@@ -37,7 +37,7 @@ services:
   
   vproweb:
     build:
-      context: ./vproweb
+      dockerfile: vproweb
     container_name: vproweb
     ports:
       - "80:80"
