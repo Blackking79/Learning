@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tmpod
+  labels:
+    app: tmpod
+spec:
+  containers:
+    - name: tmpod
+      image: imranvisualpath/freshtomapp:V7
+      ports:
+        - name: vproapp 
+          containerPort: 8080
