@@ -16,7 +16,7 @@ resource "aws_instance" "intro" {
 
     provisioner "file" {
         source = "web.sh"
-        destination = /tmp/web.sh
+        destination = "/tmp/web.sh"
     }
 
     provisioner "remote-exec" {
