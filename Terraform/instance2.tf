@@ -7,7 +7,7 @@ resource "aws_instance" "intro" {
     ami = var.AMIS[var.region]
     instance_type = "t2.micro"
     availability_zone = "us-east-1a"
-    key_name = "aws_key_pair.SSH.key_name"
+    key_name = aws_key_pair.SSH.key_name
     vpc_security_group_ids = [ "sg-053136960457e705c" ]
     tags = {
       Name = "Intro"
@@ -31,4 +31,12 @@ resource "aws_instance" "intro" {
         private_key = file("SSH")
         host = self.public_ip
     }
+}
+
+output pubicIP {
+    value = aws_instance.intro.public_ip
+}
+
+output privateIP {
+    value = aws_instance.intro.private_ip
 }
